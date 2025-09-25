@@ -1,0 +1,60 @@
+Type fuckMyAss = typeof(FuckMyAss);
+//FuckMyAss myAss = new();
+//InitArrayFields(GetArrays(fuckMyAss), GetConstants(fuckMyAss), ref myAss);
+//ConstructorInfo[] ctors = fuckMyAss.GetConstructors();
+
+List<byte> data = [];
+data.AddRange(BitConverter.GetBytes(10));
+data.AddRange(BitConverter.GetBytes(15f));
+data.AddRange(BitConverter.GetBytes((short)39));
+data.AddRange(BitConverter.GetBytes(15f));
+data.AddRange(BitConverter.GetBytes(15f));
+data.AddRange(BitConverter.GetBytes(15f));
+data.AddRange(BitConverter.GetBytes(15f));
+data.AddRange(BitConverter.GetBytes(15f));
+data.AddRange(BitConverter.GetBytes(15f));
+data.AddRange(BitConverter.GetBytes(15f));
+data.AddRange(BitConverter.GetBytes(15f));
+data.AddRange(BitConverter.GetBytes(15f));
+data.AddRange(BitConverter.GetBytes(15f));
+data.AddRange(BitConverter.GetBytes(15f));
+data.AddRange(BitConverter.GetBytes(15f));
+
+//data.AddRange(BitConverter.GetBytes(10));
+//data.AddRange(BitConverter.GetBytes(3f));
+//data.AddRange(BitConverter.GetBytes(c));
+
+using MemoryStream stream = new([.. data]);
+using BinaryReader reader = new(stream, System.Text.Encoding.ASCII);
+
+LumpItemArchetype item = new(fuckMyAss, new IntField(false), new FloatField(), new ShortField(false), new MultiArrayField(typeof(float), new FloatField(), 2, 3));
+object[] values = item.Read(reader);
+FuckMyAss ass = new((int)values[0], (float)values[1], (short)values[2], (float[][])values[3]);
+
+foreach (var value in values)
+{
+    Console.WriteLine(value);
+}
+
+Console.WriteLine(ass.D.Length);
+
+foreach (var arr in ass.D)
+{
+    foreach (var value in arr)
+    {
+        Console.Write($"{value} ");
+    }
+
+    Console.WriteLine();
+}
+
+//ArrayField fieldTest = new(typeof(int[]), new ArrayField(typeof(int), new IntField(false), 3), 2);
+
+//Console.WriteLine(fieldTest.ReadValue(reader));
+
+//int[][] test = (int[][])fieldTest.ReadValue(reader);
+
+//foreach (int[] i in test)
+//{
+//    Console.WriteLine(i.Length);
+//}
